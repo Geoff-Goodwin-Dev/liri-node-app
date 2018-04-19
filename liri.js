@@ -1,41 +1,35 @@
 require("dotenv").config();
 
 const opn = require('opn');
-let keys = require('./keys.js');
-let Spotify = require('node-spotify-api');
-let Twitter = require('twitter');
-let request = require("request");
+const fs = require("fs");
+const keys = require('./keys.js');
+const Spotify = require('node-spotify-api');
+const Twitter = require('twitter');
+const request = require("request");
 
-
-let spotify = new Spotify(keys.spotify);
-let client = new Twitter(keys.twitter);
-
-let command = process.argv[2];
 let nodeArgs = process.argv;
 
-// install Inquirer Node package!!!
-
-function doCommand () {
+const doCommand = () => {
+  let command = nodeArgs[2];
   switch (command){
     case 'my-tweets':
       myTweets();
       break;
-
     case 'spotify-this-song':
       spotifyThisSong();
       break;
-
     case 'movie-this':
       movieThis();
       break;
-
     case 'do-what-it-says':
       doWhatItSays();
       break;
+    default:
+      console.log('unknown command');
   }
-}
+};
 
-function myTweets() {
+const myTweets = () => {
   /*
     This will show your last 20 tweets and when they were created at in your terminal/bash window.
     ======================================================================================
@@ -52,16 +46,16 @@ function myTweets() {
         '\n-------------------------------------------------------------------');
       tweets.forEach((tweet) => {
         i++;
-        let createdDateTime = tweet.created_at;
-        let tweetText = tweet.text;
+        let createdDateTime = tweet.created_at
+          , tweetText = tweet.text;
         console.log('  * Tweet #' + i + ': (' + createdDateTime + ') ' + tweetText);
-        console.log('-------------------------------------------------------------------');
-      })
+      });
+      console.log('-------------------------------------------------------------------');
     }
   });
-}
+};
 
-function spotifyThisSong(){
+const spotifyThisSong = () => {
   /*
       This will show the following information about the song in your terminal/bash window:
         * Artist(s)
@@ -73,9 +67,10 @@ function spotifyThisSong(){
       https://www.npmjs.com/package/node-spotify-api
       ======================================================================================
   */
-  let songName;
+  let spotify = new Spotify(keys.spotify)
+    , songName;
   (nodeArgs.length < 4) ? songName = 'The Sign Ace of Base' : songName = nodeArgs[3];
-  spotify.search({ type: 'track', query: songName, limit: 1 }, function(err, data) {
+  spotify.search({ type: 'track', query: songName, limit: 1 }, (err, data) => {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
@@ -99,9 +94,9 @@ function spotifyThisSong(){
     opn(link);
     process.exit()
   });
-}
+};
 
-function movieThis() {
+const movieThis = () => {
   /* This will output the following information to your terminal/bash window:
       * Title of the movie.
       * Year the movie came out.
@@ -132,10 +127,18 @@ function movieThis() {
       console.log('-------------------------------------------------------------------');
     }
   });
-}
+};
 
-function doWhatItSays() {
-  console.log('do what it says called');
-}
+const doWhatItSays = () => {
+  fs.readFile("random.txt", "utf8", (error, data) {
+    if (error) {
+      return console.log(error);
+    }
+    let dataArr = data.split(", ");
+    nodeArgs[2] = dataArr[0];
+    nodeArgs[3] = dataArr[1];
+    doCommand();
+  });
+};
 
 doCommand();
