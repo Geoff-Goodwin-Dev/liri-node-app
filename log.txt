@@ -1,0 +1,69 @@
+=============================================================================
+April 20th 2018, 8:55:38 pm
+my-tweets called:
+
+Here are (up to) 20 of the most recent tweets from @LIRI_bot_tester:
+-----------------------------------------------------------------------------
+ * Tweet # 1: (Wed Apr 18 03:00:48 +0000 2018) We're no strangers to love
+ * Tweet # 2: (Wed Apr 18 03:00:32 +0000 2018) You know the rules and so do I
+ * Tweet # 3: (Wed Apr 18 03:00:16 +0000 2018) A full commitment's what I'm thinking of
+ * Tweet # 4: (Wed Apr 18 02:59:56 +0000 2018) You wouldn't get this from any other guy
+ * Tweet # 5: (Wed Apr 18 02:59:31 +0000 2018) I just wanna tell you how I'm feeling
+Gotta make you understand
+ * Tweet # 6: (Wed Apr 18 02:59:09 +0000 2018) Never gonna give you up
+ * Tweet # 7: (Wed Apr 18 02:58:51 +0000 2018) Never gonna let you down
+ * Tweet # 8: (Wed Apr 18 02:58:14 +0000 2018) Never gonna run around and desert you
+ * Tweet # 9: (Wed Apr 18 02:57:50 +0000 2018) Never gonna make you cry
+ * Tweet # 10: (Wed Apr 18 02:57:33 +0000 2018) Never gonna say goodbye
+ * Tweet # 11: (Wed Apr 18 02:57:16 +0000 2018) Never gonna tell a lie and hurt you
+ * Tweet # 12: (Wed Apr 18 02:55:01 +0000 2018) test message number 10
+ * Tweet # 13: (Wed Apr 18 02:54:50 +0000 2018) test message number 9
+ * Tweet # 14: (Wed Apr 18 02:54:27 +0000 2018) test message number 8
+ * Tweet # 15: (Wed Apr 18 02:54:18 +0000 2018) test message number 7
+ * Tweet # 16: (Wed Apr 18 02:53:55 +0000 2018) test message number 6
+ * Tweet # 17: (Wed Apr 18 02:53:48 +0000 2018) test message number 5
+ * Tweet # 18: (Wed Apr 18 02:53:36 +0000 2018) test message number 4
+ * Tweet # 19: (Tue Apr 17 22:16:54 +0000 2018) here's some more testing stuff...
+ * Tweet # 20: (Tue Apr 17 22:16:25 +0000 2018) what is happening? #sittingInClass #camelCaseHashtags #hashtagAbuse
+=============================================================================
+
+=============================================================================
+April 20th 2018, 8:55:48 pm
+spotify-this called: jesus, etc.
+
+Here is the information I was able to find on Spotify regarding "jesus, etc.":
+-----------------------------------------------------------------------------
+ * Artist(s): Wilco
+ * Song Title: Jesus, etc.
+ * Preview Link: https://open.spotify.com/track/4wd09wCccmxUB7XVJp0RNn
+ * Album:' Yankee Hotel Foxtrot
+=============================================================================
+
+=============================================================================
+April 20th 2018, 8:57:15 pm
+movie-this called: eternal sunshine
+
+Here is the information I was able to find regarding "eternal sunshine":
+-----------------------------------------------------------------------------
+ * Title: Eternal Sunshine of the Spotless Mind
+ * Release Year: 2004
+ * IMDB Rating: 8.3/10
+ * Rotten Tomatoes Rating: 93%
+ * Production Country: USA
+ * Language(s): English
+ * Plot: When their relationship turns sour, a young couple undergoes a medical procedure to have each other erased from their memories.
+ * Actors: Jim Carrey, Kate Winslet, Gerry Robert Byrne, Elijah Wood
+=============================================================================
+
+=============================================================================
+April 20th 2018, 8:58:07 pm
+spotify-this called: karma police
+
+Here is the information I was able to find on Spotify regarding "karma police":
+-----------------------------------------------------------------------------
+ * Artist(s): Radiohead
+ * Song Title: Karma Police
+ * Preview Link: https://open.spotify.com/track/3SVAN3BRByDmHOhKyIDxfC
+ * Album:' OK Computer
+=============================================================================
+

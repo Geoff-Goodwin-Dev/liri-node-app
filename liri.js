@@ -6,8 +6,13 @@ const keys = require('./keys.js');
 const Spotify = require('node-spotify-api');
 const Twitter = require('twitter');
 const request = require("request");
+const moment = require('moment');
+const hr = '-----------------------------------------------------------------------------';
+const dblRow = '=============================================================================';
+const spacer = '';
 
 let nodeArgs = process.argv;
+let displayArray = [];
 
 const doCommand = () => {
   let command = nodeArgs[2];
@@ -40,17 +45,23 @@ const myTweets = () => {
   let params = {screen_name: '@LIRI_bot_tester', count: 20};
   client.get('statuses/user_timeline', params, (error, tweets, response) => {
     if (!error) {
-      let i = 0;
-      console.log(
+      let i = 1;
+      displayArray = [
+        dblRow,
+        moment().format('MMMM Do YYYY, h:mm:ss a'),
+        'my-tweets called:',
+        spacer,
         'Here are (up to) 20 of the most recent tweets from @LIRI_bot_tester:',
-        '\n-------------------------------------------------------------------');
+        hr,
+      ];
       tweets.forEach((tweet) => {
+        displayArray.push(` * Tweet # ${i}: (${tweet.created_at}) ${tweet.text}`);
         i++;
-        let createdDateTime = tweet.created_at
-          , tweetText = tweet.text;
-        console.log('  * Tweet #' + i + ': (' + createdDateTime + ') ' + tweetText);
       });
-      console.log('-------------------------------------------------------------------');
+      displayArray.push(dblRow, spacer);
+      logToConsole(displayArray);
+      logFile(displayArray);
+      displayArray = [];
     }
   });
 };
@@ -67,32 +78,38 @@ const spotifyThisSong = () => {
       https://www.npmjs.com/package/node-spotify-api
       ======================================================================================
   */
-  let spotify = new Spotify(keys.spotify)
-    , songName;
+  let songName;
   (nodeArgs.length < 4) ? songName = 'The Sign Ace of Base' : songName = nodeArgs[3];
-  spotify.search({ type: 'track', query: songName, limit: 1 }, (err, data) => {
-    if (err) {
-      return console.log('Error occurred: ' + err);
+  let spotify = new Spotify(keys.spotify);
+  spotify.search({ type: 'track', query: songName, limit: 1 }, (error, data) => {
+    if (error) {
+      return console.log('Error occurred: ' + error);
     }
-    let artistNamesArray = [];
-    data.tracks.items[0].artists.forEach((artist) => {
-      artistNamesArray.push(artist.name);
-    });
-    let artists = artistNamesArray.join(', ')
-      , song = data.tracks.items[0].name
-      , link = data.tracks.items[0].external_urls.spotify
-      , album = data.tracks.items[0].album.name;
-    console.log(
-      'Here is the information I was able to find on Spotify regarding "' + songName + '":',
-      '\n---------------------------------------------------------------------------------',
-      '\n * Artist(s):', artists,
-      '\n * Song Title:', song,
-      '\n * Preview Link:', link,
-      '\n * Album:', album,
-    );
-    console.log('-------------------------------------------------------------------');
-    opn(link);
-    process.exit()
+    else {
+      let artistNamesArray = [];
+      data.tracks.items[0].artists.forEach((artist) => {
+        artistNamesArray.push(artist.name);
+      });
+      displayArray = [
+        dblRow,
+        moment().format('MMMM Do YYYY, h:mm:ss a'),
+        `spotify-this called: ${songName}`,
+        spacer,
+        `Here is the information I was able to find on Spotify regarding "${songName}":`,
+        hr,
+        ` * Artist(s): ${artistNamesArray.join(', ')}`,
+        ` * Song Title: ${data.tracks.items[0].name}`,
+        ` * Preview Link: ${data.tracks.items[0].external_urls.spotify}`,
+        ` * Album:' ${data.tracks.items[0].album.name}`,
+        dblRow,
+        spacer,
+      ];
+      logToConsole(displayArray);
+      logFile(displayArray);
+      displayArray = [];
+      // opn(link);
+      // process.exit()
+    }
   });
 };
 
@@ -110,27 +127,36 @@ const movieThis = () => {
   let movieName;
   (nodeArgs.length < 4) ? movieName = 'Mr. Nobody' : movieName = nodeArgs[3];
   let queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-  request(queryUrl, function(error, response, body) {
+  request(queryUrl, (error, response, body) => {
     if (!error && response.statusCode === 200) {
-      console.log(
-        'Here is the information I was able to find regarding "' + movieName + '":',
-        '\n-----------------------------------------------------------------------',
-        '\n * Title:', JSON.parse(body).Title,
-        '\n * Release Year:', JSON.parse(body).Year,
-        '\n * IMDB Rating:', JSON.parse(body).Ratings[0].Value,
-        '\n * Rotten Tomatoes Rating:', JSON.parse(body).Ratings[1].Value,
-        '\n * Production Country:', JSON.parse(body).Country,
-        '\n * Language(s):', JSON.parse(body).Language,
-        '\n * Plot:', JSON.parse(body).Plot,
-        '\n * Actors:', JSON.parse(body).Actors,
-      );
-      console.log('-------------------------------------------------------------------');
+      let responseRoot = JSON.parse(body);
+      displayArray = [
+        dblRow,
+        moment().format('MMMM Do YYYY, h:mm:ss a'),
+        `movie-this called: ${movieName}`,
+        '',
+        `Here is the information I was able to find regarding "${movieName}":`,
+        hr,
+        ` * Title: ${responseRoot.Title}`,
+        ` * Release Year: ${responseRoot.Year}`,
+        ` * IMDB Rating: ${responseRoot.Ratings[0].Value}`,
+        ` * Rotten Tomatoes Rating: ${responseRoot.Ratings[1].Value}`,
+        ` * Production Country: ${responseRoot.Country}`,
+        ` * Language(s): ${responseRoot.Language}`,
+        ` * Plot: ${responseRoot.Plot}`,
+        ` * Actors: ${responseRoot.Actors}`,
+        dblRow,
+        '',
+      ];
+      logToConsole(displayArray);
+      logFile(displayArray);
+      displayArray = [];
     }
   });
 };
 
 const doWhatItSays = () => {
-  fs.readFile("random.txt", "utf8", (error, data) {
+  fs.readFile("random.txt", "utf8", (error, data) => {
     if (error) {
       return console.log(error);
     }
@@ -139,6 +165,19 @@ const doWhatItSays = () => {
     nodeArgs[3] = dataArr[1];
     doCommand();
   });
+};
+
+const logFile = (array) => {
+  for (let item of array) {
+    fs.appendFileSync('log.txt', item +'\n');
+    item++
+  }
+};
+
+const logToConsole = (array) => {
+  for (let line of array) {
+    console.log(line);
+  }
 };
 
 doCommand();
