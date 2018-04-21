@@ -104,13 +104,20 @@ const spotifyThisSong = () => {
         dblRow,
         spacer,
       ];
+      let link = data.tracks.items[0].external_urls.spotify;
       logToConsole(displayArray);
       logFile(displayArray);
       displayArray = [];
-      // opn(link);
-      // process.exit()
+      playTheSong(link);
     }
   });
+};
+
+const playTheSong = (link) => {
+  console.log(link);
+
+  opn(link);
+  process.exit()
 };
 
 const movieThis = () => {
